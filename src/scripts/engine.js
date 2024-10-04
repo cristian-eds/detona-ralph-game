@@ -3,14 +3,16 @@ const state = {
         squares: document.querySelectorAll(".square"),
         enemy: document.querySelector(".enemy"),
         timeLeft: document.getElementById("time-left"),
-        score: document.getElementById("score")
+        score: document.getElementById("score"),
+        lives: document.getElementById("lives")
     },
     values: {
         timerId: null,
         gameVelocity: 1000,
         hitPosition: 0,
         result: 0,
-        currentTime: 60,
+        currentTime: 30,
+        remainingLives: 3
     },
     actions: {
         countDownTimerId: setInterval(countDown,1000),
@@ -22,10 +24,26 @@ function countDown() {
     state.view.timeLeft.textContent = state.values.currentTime;
 
     if(state.values.currentTime <= 0) {
-        clearInterval(state.actions.countDownTimerId);
-        clearInterval(state.values.timerId);
-        alert("Game Over! O seu resultado foi: "+ state.values.result)
+        endGame();
     }
+}
+
+function livesDown() {
+    state.values.remainingLives--;
+    state.view.lives.textContent = state.values.remainingLives;
+
+    if(state.values.remainingLives <= 0) {
+        endGame();
+    }
+}
+
+function endGame() {
+    state.values.currentTime = 0;
+    state.view.timeLeft.textContent = state.values.currentTime;
+
+    clearInterval(state.actions.countDownTimerId);
+    clearInterval(state.values.timerId);
+    alert("Game Over! O seu resultado foi: "+ state.values.result);
 }
 
 function playSound(){
@@ -57,6 +75,8 @@ function addListenerHitBox() {
                 state.view.score.textContent = state.values.result;
                 state.values.hitPosition = null;
                 playSound();
+            } else {
+                livesDown();
             }
         })
     })
