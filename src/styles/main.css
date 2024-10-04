@@ -46,3 +46,18 @@
 .menu-time h2:nth-child(2), .menu-score h2:nth-child(2) {
     margin-top: 1rem;
 }
+
+.hide {
+    display: none;
+}
+
+.btn-restart {
+    margin: 30px auto;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.btn-restart:hover {
+    background-color: lightgray;
+}
